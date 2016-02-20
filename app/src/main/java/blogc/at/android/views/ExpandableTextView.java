@@ -19,10 +19,12 @@ import blogc.at.android.animator.AnimatorListener;
 public class ExpandableTextView extends TextView
 {
     private static final int DEFAULT_DURATION = 750;
-    private static final int LINES = 1;
+    private static final int MAXMODE_LINES = 1;
 
     private OnExpandListener onExpandListener;
-    private final int duration;
+
+    private long animationDuration;
+    private boolean animating;
     private boolean expanded;
     private int maxLines;
     private int originalHeight;
@@ -43,7 +45,7 @@ public class ExpandableTextView extends TextView
 
         // read attributes
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView, defStyle, 0);
-        this.duration = attributes.getInt(R.styleable.ExpandableTextView_duration, DEFAULT_DURATION);
+        this.animationDuration = attributes.getInt(R.styleable.ExpandableTextView_animation_duration, DEFAULT_DURATION);
         attributes.recycle();
 
         // keep the original value of maxLines
@@ -68,7 +70,7 @@ public class ExpandableTextView extends TextView
             final int mMaxModeValue = (int) mMaxMode.get(this);
             final int mMaximumValue = (int) mMaximum.get(this);
 
-            return mMaxModeValue == LINES ? mMaximumValue : -1;
+            return mMaxModeValue == MAXMODE_LINES ? mMaximumValue : -1;
         }
         catch (final Exception e)
         {
@@ -76,6 +78,10 @@ public class ExpandableTextView extends TextView
         }
     }
 
+    /**
+     * Toggle the expanded state of this {@link ExpandableTextView}.
+     * @return true if toggled, false otherwise.
+     */
     public boolean toggle()
     {
         if (this.expanded)
@@ -86,11 +92,15 @@ public class ExpandableTextView extends TextView
         return this.expand();
     }
 
+    /**
+     * Expand this {@link ExpandableTextView}.
+     * @return true if expanded, false otherwise.
+     */
     public boolean expand()
     {
-        if (!this.expanded && this.maxLines >= 0)
+        if (!this.expanded && !this.animating && this.maxLines >= 0)
         {
-            this.expanded = true;
+            this.animating = true;
 
             // notify listener
             if (this.onExpandListener != null)
@@ -130,10 +140,19 @@ public class ExpandableTextView extends TextView
                     ExpandableTextView.this.setLayoutParams(layoutParams);
                 }
             });
+            valueAnimator.addListener(new AnimatorListener()
+            {
+                @Override
+                public void onAnimationEnd(final Animator animation)
+                {
+                    ExpandableTextView.this.expanded = true;
+                    ExpandableTextView.this.animating = false;
+                }
+            });
 
             // start the animation
             valueAnimator
-                .setDuration(this.duration)
+                .setDuration(this.animationDuration)
                 .start();
 
             return true;
@@ -142,11 +161,15 @@ public class ExpandableTextView extends TextView
         return false;
     }
 
+    /**
+     * Collapse this {@link TextView}.
+     * @return true if collapsed, false otherwise.
+     */
     public boolean collapse()
     {
-        if (this.expanded && this.maxLines >= 0)
+        if (this.expanded && !this.animating && this.maxLines >= 0)
         {
-            this.expanded = false;
+            this.animating = true;
 
             // notify listener
             if (this.onExpandListener != null)
@@ -175,12 +198,15 @@ public class ExpandableTextView extends TextView
                 {
                     // set maxLines to original value
                     ExpandableTextView.this.setMaxLines(ExpandableTextView.this.maxLines);
+
+                    ExpandableTextView.this.expanded = false;
+                    ExpandableTextView.this.animating = false;
                 }
             });
 
             // start the animation
             valueAnimator
-                .setDuration(this.duration)
+                .setDuration(this.animationDuration)
                 .start();
 
             return true;
@@ -189,16 +215,37 @@ public class ExpandableTextView extends TextView
         return false;
     }
 
+    /**
+     * Sets the duration of the expand / collapse animation.
+     * @param animationDuration duration in milliseconds.
+     */
+    public void setAnimationDuration(final long animationDuration)
+    {
+        this.animationDuration = animationDuration;
+    }
+
+    /**
+     * Sets a listener which receives updates about this {@link ExpandableTextView}.
+     * @param onExpandListener the listener.
+     */
     public void setOnExpandListener(final OnExpandListener onExpandListener)
     {
         this.onExpandListener = onExpandListener;
     }
 
+    /**
+     * Returns the {@link OnExpandListener}.
+     * @return the listener.
+     */
     public OnExpandListener getOnExpandListener()
     {
         return onExpandListener;
     }
 
+    /**
+     * Is this {@link ExpandableTextView} expanded or not?
+     * @return true if expanded, false if collapsed.
+     */
     public boolean isExpanded()
     {
         return this.expanded;

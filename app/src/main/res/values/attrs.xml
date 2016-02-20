@@ -2,7 +2,7 @@
 <resources>
 
     <declare-styleable name="ExpandableTextView">
-        <attr name="duration" format="integer"/>
+        <attr name="animation_duration" format="integer"/>
     </declare-styleable>
 
 </resources>

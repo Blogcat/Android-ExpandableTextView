@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 def fullVersion = '1.0.0-SNAPSHOT'
 group = 'blogc.at.android'

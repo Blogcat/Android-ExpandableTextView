@@ -1,0 +1,96 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+def fullVersion = '1.0.0-SNAPSHOT'
+group = 'blogc.at.android'
+version = fullVersion
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName fullVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'ExpandableTextView'
+            description 'An expandable TextView for Android.'
+            url 'https://github.com/Blogcat/Android-ExpandableTextView'
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId group
+            artifactId 'expandabletextview'
+            version fullVersion
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/Blogcat/Android-ExpandableTextView.git'
+                url 'https://github.com/Blogcat/Android-ExpandableTextView'
+
+            }
+            developers {
+                developer {
+                    id 'cliffus'
+                    name 'Cliff Ophalvens'
+                    email 'cliff.ophalvens@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = bintray_user
+    key = bintray_apikey
+    configurations = ['archives']
+
+    dryRun = true
+
+    pkg {
+        repo = 'maven'
+        name = 'expandabletextview'
+        userOrg = bintray_user
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/Blogcat/Android-ExpandableTextView'
+        issueTrackerUrl = 'https://github.com/Blogcat/Android-ExpandableTextView/issues'
+        vcsUrl = 'https://github.com/Blogcat/Android-ExpandableTextView.git'
+        githubRepo = 'Blogcat/Android-ExpandableTextView'
+        githubReleaseNotesFile = 'CHANGELOG.md'
+
+        version {
+            name = fullVersion
+            released  = new Date()
+            vcsTag = fullVersion
+        }
+    }
+}

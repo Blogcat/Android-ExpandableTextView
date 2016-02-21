@@ -12,7 +12,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="blogc.at.android.activities.MainActivity">
 
-
     <blogc.at.android.views.ExpandableTextView
         android:id="@+id/expandableTextView"
         android:layout_width="wrap_content"

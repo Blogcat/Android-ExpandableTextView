@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 
 import blogc.at.android.animator.AnimatorListener;
+import blogc.at.expandabletextview.R;
 
 /**
  * Created by cliff on 18/02/16.

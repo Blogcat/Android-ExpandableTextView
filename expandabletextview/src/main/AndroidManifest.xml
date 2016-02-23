@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<manifest package="blogc.at.expandabletextview"
+<manifest package="at.blogc.expandabletextview"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application

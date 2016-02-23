@@ -3,7 +3,7 @@ Android-ExpandableTextView
 An expandable TextView for Android applications (4.0+).
 
 Add dependency
---------
+--------------
 This library is not yet released in Maven Central, but instead you can use [Bintray](https://www.bintray.com)
 
 ```groovy
@@ -22,7 +22,30 @@ library dependency
 	}
 ```
 
+Usage
+-----
 
+```xml
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <at.blogc.android.views.ExpandableTextView
+        android:id="@+id/expandableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lorem_ipsum"
+        android:maxLines="5"
+        android:ellipsize="end"
+        app:animation_duration="1000"/>
+
+	<!-- Optional parameter animation_duration -->
+
+</LinearLayout>
+```
 
 License
 =======

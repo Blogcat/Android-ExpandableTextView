@@ -24,6 +24,7 @@ library dependency
 
 Usage
 -----
+Using the ExpandableTextView is very easy, it's just a regular TextView with some extra functionality added to it. By defining the android:maxLines attribute, you can set the default number of lines for the collapsed state. 
 
 ```xml
 <LinearLayout
@@ -45,6 +46,40 @@ Usage
 	<!-- Optional parameter animation_duration -->
 
 </LinearLayout>
+```
+
+In your Activity or Fragment:
+
+```java
+final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
+final Button buttonReadMore = (Button) this.findViewById(R.id.button_read_more);
+
+// toggle 
+buttonReadMore.setOnClickListener(new View.OnClickListener()
+{
+    @Override
+    public void onClick(final View v)
+    {
+        expandableTextView.toggle();
+    }
+});
+
+// you can also do the check yourself
+buttonReadMore.setOnClickListener(new View.OnClickListener()
+{
+    @Override
+    public void onClick(final View v)
+    {
+        if (expandableTextView.isExpanded())
+        {
+            expandableTextView.collapse();
+        }
+        else
+        {
+            expandableTextView.expand();
+        }
+    }
+});
 ```
 
 License

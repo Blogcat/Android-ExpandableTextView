@@ -35,4 +35,11 @@
         android:ellipsize="end"
         app:animation_duration="1000"/>
 
+    <Button
+        android:id="@+id/button_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/expand"/>
+
 </LinearLayout>

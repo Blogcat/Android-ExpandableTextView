@@ -2,7 +2,9 @@ package at.blogc.android.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import at.blogc.android.views.ExpandableTextView;
 import at.blogc.android.views.R;
@@ -24,6 +26,8 @@ import at.blogc.android.views.R;
  */
 public class MainActivity extends AppCompatActivity
 {
+    private static final String TAG = "ExpandableTextView";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,12 +35,54 @@ public class MainActivity extends AppCompatActivity
         this.setContentView(R.layout.activity_main);
 
         final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
-        expandableTextView.setOnClickListener(new View.OnClickListener()
+        final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
+
+        // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
+        expandableTextView.setAnimationDuration(1000L);
+
+        // toggle the ExpandableTextView
+        buttonToggle.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(final View v)
             {
                 expandableTextView.toggle();
+                buttonToggle.setText(expandableTextView.isExpanded() ? R.string.collapse : R.string.expand);
+            }
+        });
+
+        // but, you can also do the checks yourself
+        buttonToggle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(final View v)
+            {
+                if (expandableTextView.isExpanded())
+                {
+                    expandableTextView.collapse();
+                    buttonToggle.setText(R.string.expand);
+                }
+                else
+                {
+                    expandableTextView.expand();
+                    buttonToggle.setText(R.string.collapse);
+                }
+            }
+        });
+
+        // listen for expand / collapse events
+        expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
+        {
+            @Override
+            public void onExpand(final ExpandableTextView view)
+            {
+                Log.d(TAG, "ExpandableTextView expanded");
+            }
+
+            @Override
+            public void onCollapse(final ExpandableTextView view)
+            {
+                Log.d(TAG, "ExpandableTextView collapsed");
             }
         });
     }

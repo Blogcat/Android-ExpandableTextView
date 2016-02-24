@@ -4,7 +4,7 @@ An expandable TextView for Android applications (4.0+).
 
 Add dependency
 --------------
-This library is not yet released in Maven Central, but instead you can use [Bintray](https://www.bintray.com)
+This library is not yet released in Maven Central, but instead you can use [Bintray](https://www.bintray.com).
 
 ```groovy
 	repositories {
@@ -59,6 +59,9 @@ In your Activity or Fragment:
 ```java
 final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
 final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
+
+// set animation duration via code, but preferable in your layout files by using the animation_duration attribute
+expandableTextView.setAnimationDuration(1000L);
 
 // toggle the ExpandableTextView
 buttonToggle.setOnClickListener(new View.OnClickListener()

@@ -24,7 +24,7 @@ library dependency
 
 Usage
 -----
-Using the ExpandableTextView is very easy, it's just a regular TextView with some extra functionality added to it. By defining the android:maxLines attribute, you can set the default number of lines for the collapsed state. 
+Using the ExpandableTextView is very easy, it's just a regular TextView with some extra functionality added to it. By defining the android:maxLines attribute, you can set the default number of lines for the TextView collapsed state. 
 
 ```xml
 <LinearLayout

@@ -60,22 +60,6 @@ In your Activity or Fragment:
 final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
 final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
 
-// listen for expand / collapse events
-expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
-{
-    @Override
-    public void onExpand(final ExpandableTextView view)
-    {
-        Log.d(TAG, "ExpandableTextView expanded");
-    }
-
-    @Override
-    public void onCollapse(final ExpandableTextView view)
-    {
-        Log.d(TAG, "ExpandableTextView collapsed");
-    }
-});
-
 // toggle the ExpandableTextView
 buttonToggle.setOnClickListener(new View.OnClickListener()
 {
@@ -103,6 +87,22 @@ buttonToggle.setOnClickListener(new View.OnClickListener()
             expandableTextView.expand();
             buttonToggle.setText(R.string.collapse);
         }
+    }
+});
+
+// listen for expand / collapse events
+expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
+{
+    @Override
+    public void onExpand(final ExpandableTextView view)
+    {
+        Log.d(TAG, "ExpandableTextView expanded");
+    }
+
+    @Override
+    public void onCollapse(final ExpandableTextView view)
+    {
+        Log.d(TAG, "ExpandableTextView collapsed");
     }
 });
 ```

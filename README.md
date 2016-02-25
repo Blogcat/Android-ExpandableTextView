@@ -2,6 +2,8 @@ Android-ExpandableTextView
 ==========================
 An expandable TextView for Android applications (4.0+).
 
+[ ![Download](https://api.bintray.com/packages/cliffus/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/cliffus/maven/android-expandabletextview/_latestVersion)
+
 Demo
 ----
 This repository also contains a demo project.

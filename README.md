@@ -2,6 +2,10 @@ Android-ExpandableTextView
 ==========================
 An expandable TextView for Android applications (4.0+).
 
+Demo
+----
+![Demo](/demo.gif?raw=true)
+
 Add dependency
 --------------
 This library is not yet released in Maven Central, but instead you can use [Bintray](https://www.bintray.com).

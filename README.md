@@ -4,6 +4,8 @@ An expandable TextView for Android applications (4.0+).
 
 Demo
 ----
+This repository also contains a demo project.
+
 ![Demo](/demo.gif?raw=true)
 
 Add dependency
@@ -22,7 +24,7 @@ library dependency
 
 ```groovy
 	dependencies {
-	    compile ('at.blogc.android:android-expandabletextview:1.0.0@aar')
+	    compile ('at.blogc:expandabletextview:1.0.0@aar')
 	}
 ```
 

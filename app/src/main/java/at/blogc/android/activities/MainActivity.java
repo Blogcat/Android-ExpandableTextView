@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
 
         // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
-        expandableTextView.setAnimationDuration(1000L);
+        expandableTextView.setAnimationDuration(750L);
 
         // toggle the ExpandableTextView
         buttonToggle.setOnClickListener(new View.OnClickListener()

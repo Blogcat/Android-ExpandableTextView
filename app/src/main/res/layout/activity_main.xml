@@ -33,7 +33,7 @@
         android:text="@string/lorem_ipsum"
         android:maxLines="5"
         android:ellipsize="end"
-        app:animation_duration="1000"/>
+        app:animation_duration="750"/>
 
     <Button
         android:id="@+id/button_toggle"

@@ -2,13 +2,13 @@ Android-ExpandableTextView
 ==========================
 An expandable TextView for Android applications (4.0+).
 
-[ ![Download](https://api.bintray.com/packages/cliffus/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/cliffus/maven/android-expandabletextview/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/blogcat/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/blogcat/maven/android-expandabletextview/_latestVersion)
 
 Demo
 ----
 This repository also contains a demo project.
 
-![Demo](/demo.gif?raw=true)
+![Demo](https://github.com/Blogcat/Android-ExpandableTextView/demo.gif?raw=true)
 
 Add dependency
 --------------
@@ -17,7 +17,7 @@ This library is not yet released in Maven Central, but instead you can use [Bint
 ```groovy
 	repositories {
 	    maven {
-	        url "https://dl.bintray.com/cliffus/maven"
+	        url "https://dl.bintray.com/blogcat/maven"
 	    }
 	}
 ```

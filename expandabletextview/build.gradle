@@ -63,7 +63,7 @@ bintray {
     pkg {
         repo = 'maven'
         name = 'android-expandabletextview'
-        userOrg = "${bintray_user}"
+        userOrg = "blogcat"
         licenses = ['Apache-2.0']
         websiteUrl = 'https://github.com/Blogcat/Android-ExpandableTextView'
         issueTrackerUrl = 'https://github.com/Blogcat/Android-ExpandableTextView/issues'

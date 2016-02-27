@@ -8,7 +8,7 @@ Demo
 ----
 This repository also contains a demo project.
 
-![Demo](https://github.com/Blogcat/Android-ExpandableTextView/demo.gif?raw=true)
+![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.0/demo.gif)
 
 Add dependency
 --------------

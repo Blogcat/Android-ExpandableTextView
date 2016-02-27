@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def fullVersion = '1.0.0'
+
+group = 'at.blogc'
+version = fullVersion
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName fullVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = "${bintray_user}"
+    key = "${bintray_apikey}"
+    configurations = ['archives']
+
+    dryRun = false
+
+    pkg {
+        repo = 'maven'
+        name = 'android-expandabletextview'
+        userOrg = "blogcat"
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/Blogcat/Android-ExpandableTextView'
+        issueTrackerUrl = 'https://github.com/Blogcat/Android-ExpandableTextView/issues'
+        vcsUrl = 'https://github.com/Blogcat/Android-ExpandableTextView.git'
+        githubRepo = 'Blogcat/Android-ExpandableTextView'
+        githubReleaseNotesFile = 'CHANGELOG.md'
+
+        version {
+            name = fullVersion
+            released  = new Date()
+            vcsTag = fullVersion
+
+            gpg {
+                sign = true
+                passphrase = "${bintray_gpg_password}"
+            }
+        }
+    }
+}

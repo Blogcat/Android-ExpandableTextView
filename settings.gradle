@@ -1,1 +1,3 @@
-include ':app'
+rootProject.name='expandabletextview-root'
+
+include ':app', ':expandabletextview'

@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2016 Cliff Ophalvens (Blogc.at)
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
 <resources>
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a risus sed nulla faucibus commodo. Donec iaculis pretium facilisis. Praesent rutrum varius arcu, sed viverra ipsum malesuada id. Suspendisse nec mauris eleifend, maximus elit et, venenatis quam. Duis at maximus nisi, a congue sapien. Curabitur facilisis at nisi vitae vulputate. Phasellus vel orci et massa scelerisque ultrices. Morbi eget ipsum porttitor arcu volutpat convallis. Pellentesque velit libero, interdum sed consequat at, eleifend et nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed convallis massa imperdiet, consectetur lectus sodales, finibus velit. Donec quis tortor vel quam porta hendrerit. Vivamus vitae consectetur orci, sed feugiat turpis.</string>

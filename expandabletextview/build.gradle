@@ -2,8 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def fullVersion = '1.0.0-SNAPSHOT'
-group = 'blogc.at.android'
+def fullVersion = '1.0.0'
+
+group = 'at.blogc'
 version = fullVersion
 
 android {
@@ -31,20 +32,38 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
 bintray {
-    user = bintray_user
-    key = bintray_apikey
+    user = "${bintray_user}"
+    key = "${bintray_apikey}"
     configurations = ['archives']
 
-    dryRun = true
+    dryRun = false
 
     pkg {
         repo = 'maven'
         name = 'android-expandabletextview'
-        userOrg = bintray_user
+        userOrg = "blogcat"
         licenses = ['Apache-2.0']
         websiteUrl = 'https://github.com/Blogcat/Android-ExpandableTextView'
         issueTrackerUrl = 'https://github.com/Blogcat/Android-ExpandableTextView/issues'
@@ -56,6 +75,11 @@ bintray {
             name = fullVersion
             released  = new Date()
             vcsTag = fullVersion
+
+            gpg {
+                sign = true
+                passphrase = "${bintray_gpg_password}"
+            }
         }
     }
 }

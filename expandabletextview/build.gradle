@@ -48,9 +48,46 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'Android ExpandableTextview'
+            description 'An expandable TextView for Android.'
+            url 'https://github.com/Blogcat/Android-ExpandableTextView'
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId 'at.blogc'
+            artifactId 'expandabletextview'
+            version '1.0.0'
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection 'https://github.com/Blogcat/Android-ExpandableTextView.git'
+                url 'https://github.com/Blogcat/Android-ExpandableTextView'
+
+            }
+            developers {
+                developer {
+                    id 'cliffus'
+                    name 'Cliff Ophalvens'
+                    email 'cliff.ophalvens@gmail.com'
+                }
+            }
+        }
+    }
 }
 
 bintray {

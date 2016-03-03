@@ -12,13 +12,19 @@ This repository also contains a demo project.
 
 Add dependency
 --------------
-This library is not yet released in Maven Central, but instead you can use [Bintray](https://www.bintray.com).
+This library is released in Maven Central and jCenter:
 
 ```groovy
 	repositories {
-	    maven {
-	        url "https://dl.bintray.com/blogcat/maven"
-	    }
+	    mavenCentral()
+	}
+```
+
+or
+
+```groovy
+	repositories {
+	    jcenter()
 	}
 ```
 

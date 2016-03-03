@@ -1,6 +1,7 @@
 package at.blogc.android.views;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
-import at.blogc.android.animator.AnimatorListener;
 import at.blogc.expandabletextview.R;
 
 /**
@@ -153,7 +153,7 @@ public class ExpandableTextView extends TextView
                     ExpandableTextView.this.setLayoutParams(layoutParams);
                 }
             });
-            valueAnimator.addListener(new AnimatorListener()
+            valueAnimator.addListener(new AnimatorListenerAdapter()
             {
                 @Override
                 public void onAnimationEnd(final Animator animation)
@@ -204,7 +204,7 @@ public class ExpandableTextView extends TextView
                     ExpandableTextView.this.setLayoutParams(layoutParams);
                 }
             });
-            valueAnimator.addListener(new AnimatorListener()
+            valueAnimator.addListener(new AnimatorListenerAdapter()
             {
                 @Override
                 public void onAnimationEnd(final Animator animation)

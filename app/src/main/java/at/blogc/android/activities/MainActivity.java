@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity
 {
     private static final String TAG = "ExpandableTextView";
 
+    @SuppressWarnings("ConstantConditions")
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(final Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
         // toggle the ExpandableTextView
         buttonToggle.setOnClickListener(new View.OnClickListener()
         {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(final View v)
             {

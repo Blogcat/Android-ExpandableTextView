@@ -49,17 +49,17 @@ public class ExpandableTextView extends TextView
     private boolean expanded;
     private int originalHeight;
 
-    public ExpandableTextView(Context context)
+    public ExpandableTextView(final Context context)
     {
         this(context, null);
     }
 
-    public ExpandableTextView(Context context, AttributeSet attrs)
+    public ExpandableTextView(final Context context, final AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public ExpandableTextView(Context context, AttributeSet attrs, int defStyle)
+    public ExpandableTextView(final Context context, final AttributeSet attrs, final int defStyle)
     {
         super(context, attrs, defStyle);
 

@@ -8,7 +8,7 @@ Demo
 ----
 This repository also contains a demo project.
 
-![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.0/demo.gif)
+![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.1/demo.gif)
 
 Add dependency
 --------------
@@ -32,7 +32,7 @@ library dependency
 
 ```groovy
 	dependencies {
-	    compile ('at.blogc:expandabletextview:1.0.0@aar')
+	    compile ('at.blogc:expandabletextview:1.0.1@aar')
 	}
 ```
 
@@ -76,6 +76,13 @@ final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
 
 // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
 expandableTextView.setAnimationDuration(1000L);
+
+ // set interpolators for both expanding and collapsing animations
+expandableTextView.setInterpolator(new OvershootInterpolator());
+
+// or set them separately
+expandableTextView.setExpandInterpolator(new OvershootInterpolator());
+expandableTextView.setCollapseInterpolator(new OvershootInterpolator());
 
 // toggle the ExpandableTextView
 buttonToggle.setOnClickListener(new View.OnClickListener()

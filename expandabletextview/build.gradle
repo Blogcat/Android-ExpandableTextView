@@ -65,7 +65,7 @@ install {
             packaging 'aar'
             groupId 'at.blogc'
             artifactId 'expandabletextview'
-            version '1.0.0'
+            version fullVersion
 
             licenses {
                 license {

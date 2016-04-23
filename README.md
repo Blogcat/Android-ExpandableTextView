@@ -127,7 +127,6 @@ expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
 Roadmap
 =======
 
-* take into account TextView padding and margin
 * optional fading edge at the bottom of the TextView
 * support for Interpolators
 * update demo project with more examples

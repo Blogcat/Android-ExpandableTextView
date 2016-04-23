@@ -128,7 +128,6 @@ Roadmap
 =======
 
 * optional fading edge at the bottom of the TextView
-* support for Interpolators
 * update demo project with more examples
 
 License

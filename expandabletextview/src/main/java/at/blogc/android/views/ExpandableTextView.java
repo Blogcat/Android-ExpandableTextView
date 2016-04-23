@@ -2,12 +2,14 @@ package at.blogc.android.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
@@ -29,17 +31,22 @@ import at.blogc.expandabletextview.R;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * @author Cliff Ophalvens (Blogc.at)
  */
 public class ExpandableTextView extends TextView
 {
+    // copy off TextView.LINES
     private static final int MAXMODE_LINES = 1;
 
     private OnExpandListener onExpandListener;
+    private TimeInterpolator expandInterpolator;
+    private TimeInterpolator collapseInterpolator;
 
+    private final int maxLines;
     private long animationDuration;
     private boolean animating;
     private boolean expanded;
-    private int maxLines;
     private int originalHeight;
 
     public ExpandableTextView(Context context)
@@ -63,6 +70,10 @@ public class ExpandableTextView extends TextView
 
         // keep the original value of maxLines
         this.maxLines = this.getMaxLines();
+
+        // create default interpolators
+        this.expandInterpolator = new AccelerateDecelerateInterpolator();
+        this.collapseInterpolator = new AccelerateDecelerateInterpolator();
     }
 
     @Override
@@ -163,6 +174,9 @@ public class ExpandableTextView extends TextView
                 }
             });
 
+            // set interpolator
+            valueAnimator.setInterpolator(this.expandInterpolator);
+
             // start the animation
             valueAnimator
                 .setDuration(this.animationDuration)
@@ -217,6 +231,9 @@ public class ExpandableTextView extends TextView
                 }
             });
 
+            // set interpolator
+            valueAnimator.setInterpolator(this.collapseInterpolator);
+
             // start the animation
             valueAnimator
                 .setDuration(this.animationDuration)
@@ -253,6 +270,52 @@ public class ExpandableTextView extends TextView
     public OnExpandListener getOnExpandListener()
     {
         return onExpandListener;
+    }
+
+    /**
+     * Sets a {@link TimeInterpolator} for expanding and collapsing.
+     * @param interpolator the interpolator
+     */
+    public void setInterpolator(final TimeInterpolator interpolator)
+    {
+        this.expandInterpolator = interpolator;
+        this.collapseInterpolator = interpolator;
+    }
+
+    /**
+     * Sets a {@link TimeInterpolator} for expanding.
+     * @param expandInterpolator the interpolator
+     */
+    public void setExpandInterpolator(final TimeInterpolator expandInterpolator)
+    {
+        this.expandInterpolator = expandInterpolator;
+    }
+
+    /**
+     * Returns the current {@link TimeInterpolator} for expanding.
+     * @return the current interpolator, null by default.
+     */
+    public TimeInterpolator getExpandInterpolator()
+    {
+        return this.expandInterpolator;
+    }
+
+    /**
+     * Sets a {@link TimeInterpolator} for collpasing.
+     * @param collapseInterpolator the interpolator
+     */
+    public void setCollapseInterpolator(final TimeInterpolator collapseInterpolator)
+    {
+        this.collapseInterpolator = collapseInterpolator;
+    }
+
+    /**
+     * Returns the current {@link TimeInterpolator} for collapsing.
+     * @return the current interpolator, null by default.
+     */
+    public TimeInterpolator getCollapseInterpolator()
+    {
+        return this.collapseInterpolator;
     }
 
     /**

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 
 import at.blogc.android.views.ExpandableTextView;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity
 {
     private static final String TAG = "ExpandableTextView";
 
+    @SuppressWarnings("ConstantConditions")
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(final Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
@@ -40,9 +42,17 @@ public class MainActivity extends AppCompatActivity
         // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
         expandableTextView.setAnimationDuration(750L);
 
+        // set interpolators for both expanding and collapsing animations
+        expandableTextView.setInterpolator(new OvershootInterpolator());
+
+        // or set them separately
+        expandableTextView.setExpandInterpolator(new OvershootInterpolator());
+        expandableTextView.setCollapseInterpolator(new OvershootInterpolator());
+
         // toggle the ExpandableTextView
         buttonToggle.setOnClickListener(new View.OnClickListener()
         {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onClick(final View v)
             {

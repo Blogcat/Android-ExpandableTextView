@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
+import at.blogc.expandabletextview.BuildConfig;
 import at.blogc.expandabletextview.R;
 
 /**
@@ -31,7 +32,6 @@ import at.blogc.expandabletextview.R;
  */
 public class ExpandableTextView extends TextView
 {
-    private static final int DEFAULT_DURATION = 750;
     private static final int MAXMODE_LINES = 1;
 
     private OnExpandListener onExpandListener;
@@ -58,7 +58,7 @@ public class ExpandableTextView extends TextView
 
         // read attributes
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView, defStyle, 0);
-        this.animationDuration = attributes.getInt(R.styleable.ExpandableTextView_animation_duration, DEFAULT_DURATION);
+        this.animationDuration = attributes.getInt(R.styleable.ExpandableTextView_animation_duration, BuildConfig.DEFAULT_ANIMATION_DURATION);
         attributes.recycle();
 
         // keep the original value of maxLines

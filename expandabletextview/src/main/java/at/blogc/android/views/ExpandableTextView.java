@@ -108,12 +108,9 @@ public class ExpandableTextView extends TextView
      */
     public boolean toggle()
     {
-        if (this.expanded)
-        {
-            return this.collapse();
-        }
-
-        return this.expand();
+        return this.expanded
+            ? this.collapse()
+            : this.expand();
     }
 
     /**

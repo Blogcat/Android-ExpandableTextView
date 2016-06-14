@@ -213,9 +213,6 @@ public class ExpandableTextView extends TextView
             // get expanded height
             final int expandedHeight = this.getMeasuredHeight();
 
-            // get collapsed height
-            //TODO
-
             // animate from expanded height to collapsed height
             final ValueAnimator valueAnimator = ValueAnimator.ofInt(expandedHeight, this.collapsedHeight);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()

@@ -8,7 +8,7 @@ Demo
 ----
 This repository also contains a demo project.
 
-![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.1/demo.gif)
+![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.2/demo.gif)
 
 Add dependency
 --------------
@@ -32,7 +32,7 @@ library dependency
 
 ```groovy
 	dependencies {
-	    compile ('at.blogc:expandabletextview:1.0.1@aar')
+	    compile ('at.blogc:expandabletextview:1.0.2@aar')
 	}
 ```
 
@@ -134,6 +134,7 @@ expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
 Roadmap
 =======
 
+* add method to know if the TextView is expandable or not 
 * optional fading edge at the bottom of the TextView
 * update demo project with more examples
 

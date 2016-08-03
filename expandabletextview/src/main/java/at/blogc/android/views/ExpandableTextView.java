@@ -58,12 +58,12 @@ public class ExpandableTextView extends TextView
         this(context, null);
     }
 
-    public ExpandableTextView(final Context context, final AttributeSet attrs)
+    public ExpandableTextView(final Context context, @Nullable final AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public ExpandableTextView(final Context context, final AttributeSet attrs, final int defStyle)
+    public ExpandableTextView(final Context context, @Nullable final AttributeSet attrs, final int defStyle)
     {
         super(context, attrs, defStyle);
 

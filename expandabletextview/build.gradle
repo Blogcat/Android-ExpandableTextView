@@ -33,6 +33,8 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-annotations:23.3.0'
+
     testCompile 'junit:junit:4.12'
 }
 

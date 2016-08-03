@@ -8,12 +8,12 @@ group = 'at.blogc'
 version = fullVersion
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName fullVersion
 
@@ -33,7 +33,7 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-annotations:23.3.0'
+    compile 'com.android.support:support-annotations:24.1.1'
 
     testCompile 'junit:junit:4.12'
 }

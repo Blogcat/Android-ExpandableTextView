@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class ExpandableTextView extends TextView
     private boolean animating;
     private boolean expanded;
     private int collapsedHeight;
+    private View mToggleButton;
 
     public ExpandableTextView(final Context context)
     {
@@ -359,5 +361,23 @@ public class ExpandableTextView extends TextView
          * @param view the textview
          */
         void onCollapse(ExpandableTextView view);
+    }
+
+    public void setToggleButton(View mToggleButton) {
+        this.mToggleButton = mToggleButton;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right,
+                            int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        if (mToggleButton != null) {
+            if(getLineCount() >= this.maxLines){
+                mToggleButton.setVisibility(VISIBLE);
+            }else {
+                mToggleButton.setVisibility(GONE);
+            }
+        }
     }
 }

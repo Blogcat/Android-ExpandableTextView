@@ -17,4 +17,5 @@
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse a risus sed nulla faucibus commodo. Donec iaculis pretium facilisis. Praesent rutrum varius arcu, sed viverra ipsum malesuada id. Suspendisse nec mauris eleifend, maximus elit et, venenatis quam. Duis at maximus nisi, a congue sapien. Curabitur facilisis at nisi vitae vulputate. Phasellus vel orci et massa scelerisque ultrices. Morbi eget ipsum porttitor arcu volutpat convallis. Pellentesque velit libero, interdum sed consequat at, eleifend et nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed convallis massa imperdiet, consectetur lectus sodales, finibus velit. Donec quis tortor vel quam porta hendrerit. Vivamus vitae consectetur orci, sed feugiat turpis.</string>
 
+    <string name="short_string">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </string>
 </resources>

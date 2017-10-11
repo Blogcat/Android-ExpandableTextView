@@ -16,3 +16,7 @@ Fixed some issues related to rotating a device from portrait to landscape (and t
 1.0.3
 -----
 Removed attributes from AndroidManifest, because they may conflict with the ones in your app AndroidManifest
+
+1.0.4
+-----
+Added support for Android O

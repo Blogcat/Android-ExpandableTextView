@@ -1,6 +1,6 @@
 Android-ExpandableTextView
 ==========================
-An expandable TextView for Android applications (4.0+).
+An expandable TextView for Android applications (4.1+).
 
 [ ![Download](https://api.bintray.com/packages/blogcat/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/blogcat/maven/android-expandabletextview/_latestVersion)
 
@@ -8,7 +8,7 @@ Demo
 ----
 This repository also contains a demo project.
 
-![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.3/demo.gif)
+![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/release/1.0.4/demo.gif)
 
 Add dependency
 --------------
@@ -32,7 +32,7 @@ library dependency
 
 ```groovy
 	dependencies {
-	    compile 'at.blogc:expandabletextview:1.0.3'
+	    compile 'at.blogc:expandabletextview:1.0.4'
 	}
 ```
 
@@ -130,13 +130,6 @@ expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
     }
 });
 ```
-
-Roadmap
-=======
-
-* add method to know if the TextView is expandable or not 
-* optional fading edge at the bottom of the TextView
-* update demo project with more examples
 
 License
 =======

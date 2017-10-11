@@ -1,5 +1,6 @@
 package at.blogc.android.activities;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,16 +82,16 @@ public class MainActivity extends AppCompatActivity
         });
 
         // listen for expand / collapse events
-        expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
+        expandableTextView.addOnExpandListener(new ExpandableTextView.OnExpandListener()
         {
             @Override
-            public void onExpand(final ExpandableTextView view)
+            public void onExpand(@NonNull final ExpandableTextView view)
             {
                 Log.d(TAG, "ExpandableTextView expanded");
             }
 
             @Override
-            public void onCollapse(final ExpandableTextView view)
+            public void onCollapse(@NonNull final ExpandableTextView view)
             {
                 Log.d(TAG, "ExpandableTextView collapsed");
             }

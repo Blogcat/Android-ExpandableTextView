@@ -7,12 +7,16 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import at.blogc.expandabletextview.BuildConfig;
 import at.blogc.expandabletextview.R;
@@ -39,7 +43,7 @@ public class ExpandableTextView extends TextView
     // copy off TextView.LINES
     private static final int MAXMODE_LINES = 1;
 
-    private OnExpandListener onExpandListener;
+    private final List<OnExpandListener> onExpandListeners;
     private TimeInterpolator expandInterpolator;
     private TimeInterpolator collapseInterpolator;
 
@@ -54,12 +58,12 @@ public class ExpandableTextView extends TextView
         this(context, null);
     }
 
-    public ExpandableTextView(final Context context, final AttributeSet attrs)
+    public ExpandableTextView(final Context context, @Nullable final AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public ExpandableTextView(final Context context, final AttributeSet attrs, final int defStyle)
+    public ExpandableTextView(final Context context, @Nullable final AttributeSet attrs, final int defStyle)
     {
         super(context, attrs, defStyle);
 
@@ -70,6 +74,9 @@ public class ExpandableTextView extends TextView
 
         // keep the original value of maxLines
         this.maxLines = this.getMaxLines();
+
+        // create bucket for OnExpandListener instances
+        this.onExpandListeners = new ArrayList<>();
 
         // create default interpolators
         this.expandInterpolator = new AccelerateDecelerateInterpolator();
@@ -102,6 +109,9 @@ public class ExpandableTextView extends TextView
         }
     }
 
+
+    //region public helper methods
+
     /**
      * Toggle the expanded state of this {@link ExpandableTextView}.
      * @return true if toggled, false otherwise.
@@ -124,10 +134,7 @@ public class ExpandableTextView extends TextView
             this.animating = true;
 
             // notify listener
-            if (this.onExpandListener != null)
-            {
-                this.onExpandListener.onExpand(this);
-            }
+            this.notifyOnExpand();
 
             // get collapsed height
             this.measure
@@ -205,10 +212,7 @@ public class ExpandableTextView extends TextView
             this.animating = true;
 
             // notify listener
-            if (this.onExpandListener != null)
-            {
-                this.onExpandListener.onCollapse(this);
-            }
+            this.notifyOnCollapse();
 
             // get expanded height
             final int expandedHeight = this.getMeasuredHeight();
@@ -260,6 +264,10 @@ public class ExpandableTextView extends TextView
         return false;
     }
 
+    //endregion
+
+    //region public getters and setters
+
     /**
      * Sets the duration of the expand / collapse animation.
      * @param animationDuration duration in milliseconds.
@@ -270,21 +278,21 @@ public class ExpandableTextView extends TextView
     }
 
     /**
-     * Sets a listener which receives updates about this {@link ExpandableTextView}.
+     * Adds a listener which receives updates about this {@link ExpandableTextView}.
      * @param onExpandListener the listener.
      */
-    public void setOnExpandListener(final OnExpandListener onExpandListener)
+    public void addOnExpandListener(final OnExpandListener onExpandListener)
     {
-        this.onExpandListener = onExpandListener;
+        this.onExpandListeners.add(onExpandListener);
     }
 
     /**
-     * Returns the {@link OnExpandListener}.
-     * @return the listener.
+     * Removes a listener which receives updates about this {@link ExpandableTextView}.
+     * @param onExpandListener the listener.
      */
-    public OnExpandListener getOnExpandListener()
+    public void removeOnExpandListener(final OnExpandListener onExpandListener)
     {
-        return this.onExpandListener;
+        this.onExpandListeners.remove(onExpandListener);
     }
 
     /**
@@ -342,6 +350,32 @@ public class ExpandableTextView extends TextView
         return this.expanded;
     }
 
+    //endregion
+
+    /**
+     * This method will notify the listener about this view being expanded.
+     */
+    private void notifyOnCollapse()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onCollapse(this);
+        }
+    }
+
+    /**
+     * This method will notify the listener about this view being collapsed.
+     */
+    private void notifyOnExpand()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onExpand(this);
+        }
+    }
+
+    //region public interfaces
+
     /**
      * Interface definition for a callback to be invoked when
      * a {@link ExpandableTextView} is expanded or collapsed.
@@ -352,12 +386,34 @@ public class ExpandableTextView extends TextView
          * The {@link ExpandableTextView} is being expanded.
          * @param view the textview
          */
-        void onExpand(ExpandableTextView view);
+        void onExpand(@NonNull ExpandableTextView view);
 
         /**
          * The {@link ExpandableTextView} is being collapsed.
          * @param view the textview
          */
-        void onCollapse(ExpandableTextView view);
+        void onCollapse(@NonNull ExpandableTextView view);
     }
+
+    /**
+     * Simple implementation of the {@link OnExpandListener} interface with stub
+     * implementations of each method. Extend this if you do not intend to override
+     * every method of {@link OnExpandListener}.
+     */
+    public static class SimpleOnExpandListener implements OnExpandListener
+    {
+        @Override
+        public void onExpand(@NonNull final ExpandableTextView view)
+        {
+            // empty implementation
+        }
+
+        @Override
+        public void onCollapse(@NonNull final ExpandableTextView view)
+        {
+            // empty implementation
+        }
+    }
+
+    //endregion
 }

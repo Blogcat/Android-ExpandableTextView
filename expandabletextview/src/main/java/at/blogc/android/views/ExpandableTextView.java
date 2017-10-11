@@ -374,18 +374,6 @@ public class ExpandableTextView extends TextView
         }
     }
 
-    /**
-     * This method will notify the listener about this change.
-     * @param canExpand
-     */
-    private void notifyExpandBehaviourChanged(final boolean canExpand)
-    {
-        for (final OnExpandListener onExpandListener : this.onExpandListeners)
-        {
-            onExpandListener.onExpandBehaviourChanged(this, canExpand);
-        }
-    }
-
     //region public interfaces
 
     /**

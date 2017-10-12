@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def fullVersion = '1.0.4'
+def fullVersion = '1.0.5'
 
 group = 'at.blogc'
 version = fullVersion

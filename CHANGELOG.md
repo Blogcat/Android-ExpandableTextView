@@ -19,4 +19,8 @@ Removed attributes from AndroidManifest, because they may conflict with the ones
 
 1.0.4
 -----
+Use latest build tools and target Android O
+
+1.0.5
+-----
 Added support for Android O

@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(final View v)
             {
+                buttonToggle.setText(expandableTextView.isExpanded() ? R.string.expand : R.string.collapse);
                 expandableTextView.toggle();
-                buttonToggle.setText(expandableTextView.isExpanded() ? R.string.collapse : R.string.expand);
             }
         });
 

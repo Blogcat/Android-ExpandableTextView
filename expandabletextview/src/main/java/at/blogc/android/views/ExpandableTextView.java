@@ -6,7 +6,6 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import at.blogc.expandabletextview.BuildConfig;
 import at.blogc.expandabletextview.R;
 
 /**
- * Copyright (C) 2016 Cliff Ophalvens (Blogc.at)
+ * Copyright (C) 2017 Cliff Ophalvens (Blogc.at)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,9 +38,6 @@ import at.blogc.expandabletextview.R;
  */
 public class ExpandableTextView extends TextView
 {
-    // copy off TextView.LINES
-    private static final int MAXMODE_LINES = 1;
-
     private final List<OnExpandListener> onExpandListeners;
     private TimeInterpolator expandInterpolator;
     private TimeInterpolator collapseInterpolator;
@@ -75,7 +70,7 @@ public class ExpandableTextView extends TextView
         // keep the original value of maxLines
         this.maxLines = this.getMaxLines();
 
-        // create bucket for OnExpandListener instances
+        // create bucket of OnExpandListener instances
         this.onExpandListeners = new ArrayList<>();
 
         // create default interpolators
@@ -84,31 +79,17 @@ public class ExpandableTextView extends TextView
     }
 
     @Override
-    public int getMaxLines()
+    protected void onMeasure(final int widthMeasureSpec, int heightMeasureSpec)
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        // if this TextView is collapsed and maxLines = 0,
+        // than make its height equals to zero
+        if (this.maxLines == 0 && !this.expanded && !this.animating)
         {
-            return super.getMaxLines();
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.EXACTLY);
         }
 
-        try
-        {
-            final Field mMaxMode = TextView.class.getField("mMaxMode");
-            mMaxMode.setAccessible(true);
-            final Field mMaximum = TextView.class.getField("mMaximum");
-            mMaximum.setAccessible(true);
-
-            final int mMaxModeValue = (int) mMaxMode.get(this);
-            final int mMaximumValue = (int) mMaximum.get(this);
-
-            return mMaxModeValue == MAXMODE_LINES ? mMaximumValue : -1;
-        }
-        catch (final Exception e)
-        {
-           return -1;
-        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
 
     //region public helper methods
 
@@ -131,12 +112,10 @@ public class ExpandableTextView extends TextView
     {
         if (!this.expanded && !this.animating && this.maxLines >= 0)
         {
-            this.animating = true;
-
             // notify listener
             this.notifyOnExpand();
 
-            // get collapsed height
+            // measure collapsed height
             this.measure
             (
                 MeasureSpec.makeMeasureSpec(this.getMeasuredWidth(), MeasureSpec.EXACTLY),
@@ -145,10 +124,13 @@ public class ExpandableTextView extends TextView
 
             this.collapsedHeight = this.getMeasuredHeight();
 
+            // indicate that we are now animating
+            this.animating = true;
+
             // set maxLines to MAX Integer, so we can calculate the expanded height
             this.setMaxLines(Integer.MAX_VALUE);
 
-            // get expanded height
+            // measure expanded height
             this.measure
             (
                 MeasureSpec.makeMeasureSpec(this.getMeasuredWidth(), MeasureSpec.EXACTLY),
@@ -164,17 +146,20 @@ public class ExpandableTextView extends TextView
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation)
                 {
-                    final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
-                    layoutParams.height = (int) animation.getAnimatedValue();
-                    ExpandableTextView.this.setLayoutParams(layoutParams);
+                    ExpandableTextView.this.setHeight((int) animation.getAnimatedValue());
                 }
             });
 
+            // wait for the animation to end
             valueAnimator.addListener(new AnimatorListenerAdapter()
             {
                 @Override
                 public void onAnimationEnd(final Animator animation)
                 {
+                    // reset min & max height (previously set with setHeight() method)
+                    ExpandableTextView.this.setMaxHeight(Integer.MAX_VALUE);
+                    ExpandableTextView.this.setMinHeight(0);
+
                     // if fully expanded, set height to WRAP_CONTENT, because when rotating the device
                     // the height calculated with this ValueAnimator isn't correct anymore
                     final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
@@ -209,13 +194,14 @@ public class ExpandableTextView extends TextView
     {
         if (this.expanded && !this.animating && this.maxLines >= 0)
         {
-            this.animating = true;
-
             // notify listener
             this.notifyOnCollapse();
 
-            // get expanded height
+            // measure expanded height
             final int expandedHeight = this.getMeasuredHeight();
+
+            // indicate that we are now animating
+            this.animating = true;
 
             // animate from expanded height to collapsed height
             final ValueAnimator valueAnimator = ValueAnimator.ofInt(expandedHeight, this.collapsedHeight);
@@ -224,29 +210,28 @@ public class ExpandableTextView extends TextView
                 @Override
                 public void onAnimationUpdate(final ValueAnimator animation)
                 {
-                    final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
-                    layoutParams.height = (int) animation.getAnimatedValue();
-                    ExpandableTextView.this.setLayoutParams(layoutParams);
+                    ExpandableTextView.this.setHeight((int) animation.getAnimatedValue());
                 }
             });
 
+            // wait for the animation to end
             valueAnimator.addListener(new AnimatorListenerAdapter()
             {
                 @Override
                 public void onAnimationEnd(final Animator animation)
                 {
-                    // set maxLines to original value
-                    ExpandableTextView.this.setMaxLines(ExpandableTextView.this.maxLines);
-
-                    // if fully collapsed, set height to WRAP_CONTENT, because when rotating the device
-                    // the height calculated with this ValueAnimator isn't correct anymore
-                    final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
-                    layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                    ExpandableTextView.this.setLayoutParams(layoutParams);
-
                     // keep track of current status
                     ExpandableTextView.this.expanded = false;
                     ExpandableTextView.this.animating = false;
+
+                    // set maxLines back to original value
+                    ExpandableTextView.this.setMaxLines(ExpandableTextView.this.maxLines);
+
+                    // if fully collapsed, set height back to WRAP_CONTENT, because when rotating the device
+                    // the height previously calculated with this ValueAnimator isn't correct anymore
+                    final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
+                    layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    ExpandableTextView.this.setLayoutParams(layoutParams);
                 }
             });
 

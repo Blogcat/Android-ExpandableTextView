@@ -23,4 +23,5 @@ Use latest build tools and target Android O
 
 1.0.5
 -----
-Added support for Android O
+- Added support for Android O
+- Added RecyclerView Demo

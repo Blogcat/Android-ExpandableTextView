@@ -19,4 +19,9 @@ Removed attributes from AndroidManifest, because they may conflict with the ones
 
 1.0.4
 -----
-Added support for Android O
+Use latest build tools and target Android O
+
+1.0.5
+-----
+- Added support for Android O
+- Added RecyclerView Demo

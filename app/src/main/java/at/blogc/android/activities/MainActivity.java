@@ -12,7 +12,7 @@ import at.blogc.android.views.ExpandableTextView;
 import at.blogc.android.views.R;
 
 /**
- * Copyright (C) 2016 Cliff Ophalvens (Blogc.at)
+ * Copyright (C) 2017 Cliff Ophalvens (Blogc.at)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
 
-        final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
-        final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
+        final ExpandableTextView expandableTextView = this.findViewById(R.id.expandableTextView);
+        final Button buttonToggle = this.findViewById(R.id.button_toggle);
 
         // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
         expandableTextView.setAnimationDuration(750L);
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(final View v)
             {
+                buttonToggle.setText(expandableTextView.isExpanded() ? R.string.expand : R.string.collapse);
                 expandableTextView.toggle();
-                buttonToggle.setText(expandableTextView.isExpanded() ? R.string.collapse : R.string.expand);
             }
         });
 

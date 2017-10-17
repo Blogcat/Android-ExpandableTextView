@@ -156,9 +156,14 @@ public class ExpandableTextView extends TextView
                 @Override
                 public void onAnimationEnd(final Animator animation)
                 {
+<<<<<<< HEAD
                     // reset min & max height (previously set with setHeight() method)
                     ExpandableTextView.this.setMaxHeight(Integer.MAX_VALUE);
                     ExpandableTextView.this.setMinHeight(0);
+=======
+                    setMaxHeight(Integer.MAX_VALUE);
+                    setMinHeight(0);
+>>>>>>> dcf3cd7e24ecf9b8da5a9ca13eedb04be2fa4b9a
 
                     // if fully expanded, set height to WRAP_CONTENT, because when rotating the device
                     // the height calculated with this ValueAnimator isn't correct anymore

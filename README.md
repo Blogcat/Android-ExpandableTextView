@@ -55,7 +55,7 @@ Using the ExpandableTextView is very easy, it's just a regular TextView with som
         android:text="@string/lorem_ipsum"
         android:maxLines="5"
         android:ellipsize="end"
-        app:animation_duration="1000"/>
+        app:animation_duration="750"/>
 
 	<!-- Optional parameter animation_duration: sets the duration of the expand animation -->
 
@@ -75,7 +75,7 @@ final ExpandableTextView expandableTextView = (ExpandableTextView) this.findView
 final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
 
 // set animation duration via code, but preferable in your layout files by using the animation_duration attribute
-expandableTextView.setAnimationDuration(1000L);
+expandableTextView.setAnimationDuration(750L);
 
  // set interpolators for both expanding and collapsing animations
 expandableTextView.setInterpolator(new OvershootInterpolator());
@@ -85,15 +85,15 @@ expandableTextView.setExpandInterpolator(new OvershootInterpolator());
 expandableTextView.setCollapseInterpolator(new OvershootInterpolator());
 
 // toggle the ExpandableTextView
-buttonToggle.setOnClickListener(new View.OnClickListener()
-{
-    @Override
-    public void onClick(final View v)
+    buttonToggle.setOnClickListener(new View.OnClickListener()
     {
-        expandableTextView.toggle();
-        buttonToggle.setText(expandableTextView.isExpanded() ? R.string.collapse : R.string.expand);
-    }
-});
+        @Override
+        public void onClick(final View v)
+        {
+            buttonToggle.setText(expandableTextView.isExpanded() ? R.string.expand : R.string.collapse);
+            expandableTextView.toggle();
+        }
+    });
 
 // but, you can also do the checks yourself
 buttonToggle.setOnClickListener(new View.OnClickListener()

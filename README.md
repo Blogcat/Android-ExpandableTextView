@@ -4,6 +4,11 @@ An expandable TextView for Android applications (4.1+).
 
 [ ![Download](https://api.bintray.com/packages/blogcat/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/blogcat/maven/android-expandabletextview/_latestVersion)
 
+Latest Changes
+--------------
+- Added support for Android O
+- Added RecyclerView Demo
+
 Demo
 ----
 This repository also contains a demo project.

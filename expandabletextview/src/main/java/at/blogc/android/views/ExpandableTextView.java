@@ -113,7 +113,7 @@ public class ExpandableTextView extends TextView
         if (!this.expanded && !this.animating && this.maxLines >= 0)
         {
             // notify listener
-            this.notifyOnExpand();
+            this.notifyOnStartExpand();
 
             // measure collapsed height
             this.measure
@@ -169,6 +169,7 @@ public class ExpandableTextView extends TextView
                     // keep track of current status
                     ExpandableTextView.this.expanded = true;
                     ExpandableTextView.this.animating = false;
+                    notifyOnEndExpand();
                 }
             });
 
@@ -195,7 +196,7 @@ public class ExpandableTextView extends TextView
         if (this.expanded && !this.animating && this.maxLines >= 0)
         {
             // notify listener
-            this.notifyOnCollapse();
+            this.notifyOnStartCollapse();
 
             // measure expanded height
             final int expandedHeight = this.getMeasuredHeight();
@@ -232,6 +233,7 @@ public class ExpandableTextView extends TextView
                     final ViewGroup.LayoutParams layoutParams = ExpandableTextView.this.getLayoutParams();
                     layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     ExpandableTextView.this.setLayoutParams(layoutParams);
+                    notifyOnEndCollapse();
                 }
             });
 
@@ -338,24 +340,45 @@ public class ExpandableTextView extends TextView
     //endregion
 
     /**
-     * This method will notify the listener about this view being expanded.
+     * This method will notify the listener about this view starts to collapse.
      */
-    private void notifyOnCollapse()
+    private void notifyOnStartCollapse()
     {
         for (final OnExpandListener onExpandListener : this.onExpandListeners)
         {
-            onExpandListener.onCollapse(this);
+            onExpandListener.onStartCollapse(this);
         }
     }
 
     /**
-     * This method will notify the listener about this view being collapsed.
+     * This method will notify the listener about this view starts to expand.
      */
-    private void notifyOnExpand()
+    private void notifyOnStartExpand()
     {
         for (final OnExpandListener onExpandListener : this.onExpandListeners)
         {
-            onExpandListener.onExpand(this);
+            onExpandListener.onStartExpand(this);
+        }
+    }
+    /**
+     * This method will notify the listener about this view finishes to collapse.
+     */
+    private void notifyOnEndCollapse()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onEndCollapse(this);
+        }
+    }
+
+    /**
+     * This method will notify the listener about this view finishes to expand.
+     */
+    private void notifyOnEndExpand()
+    {
+        for (final OnExpandListener onExpandListener : this.onExpandListeners)
+        {
+            onExpandListener.onEndExpand(this);
         }
     }
 
@@ -368,16 +391,28 @@ public class ExpandableTextView extends TextView
     public interface OnExpandListener
     {
         /**
-         * The {@link ExpandableTextView} is being expanded.
+         * The {@link ExpandableTextView} starts to expand.
          * @param view the textview
          */
-        void onExpand(@NonNull ExpandableTextView view);
+        void onStartExpand(@NonNull ExpandableTextView view);
 
         /**
-         * The {@link ExpandableTextView} is being collapsed.
+         * The {@link ExpandableTextView} starts to collapse.
          * @param view the textview
          */
-        void onCollapse(@NonNull ExpandableTextView view);
+        void onStartCollapse(@NonNull ExpandableTextView view);
+
+        /**
+         * The {@link ExpandableTextView} finishes to expand.
+         * @param view the textview
+         */
+        void onEndExpand(@NonNull ExpandableTextView view);
+
+        /**
+         * The {@link ExpandableTextView} finishes to collapse.
+         * @param view the textview
+         */
+        void onEndCollapse(@NonNull ExpandableTextView view);
     }
 
     /**
@@ -388,14 +423,24 @@ public class ExpandableTextView extends TextView
     public static class SimpleOnExpandListener implements OnExpandListener
     {
         @Override
-        public void onExpand(@NonNull final ExpandableTextView view)
+        public void onStartExpand(@NonNull final ExpandableTextView view)
         {
             // empty implementation
         }
 
         @Override
-        public void onCollapse(@NonNull final ExpandableTextView view)
+        public void onStartCollapse(@NonNull final ExpandableTextView view)
         {
+            // empty implementation
+        }
+
+        @Override
+        public void onEndExpand(@NonNull ExpandableTextView view) {
+            // empty implementation
+        }
+
+        @Override
+        public void onEndCollapse(@NonNull ExpandableTextView view) {
             // empty implementation
         }
     }

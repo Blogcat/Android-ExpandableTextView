@@ -123,13 +123,13 @@ buttonToggle.setOnClickListener(new View.OnClickListener()
 expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
 {
     @Override
-    public void onExpand(final ExpandableTextView view)
+    public void onStartExpand(final ExpandableTextView view)
     {
         Log.d(TAG, "ExpandableTextView expanded");
     }
 
     @Override
-    public void onCollapse(final ExpandableTextView view)
+    public void onStartCollapse(final ExpandableTextView view)
     {
         Log.d(TAG, "ExpandableTextView collapsed");
     }

@@ -6,6 +6,8 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -401,4 +403,74 @@ public class ExpandableTextView extends TextView
     }
 
     //endregion
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        // Boilerplate code that allows parent classes to save state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+        //end
+
+        ss.isExpanded = this.isExpanded();
+
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        //begin boilerplate code so parent classes can restore state
+        if(!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState ss = (SavedState)state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        //end
+
+        if (ss.isExpanded) {
+            //  Temporarily setting animation duration to 0 to make allow for a smoother UI experience.
+            setAnimationDuration(0);
+            expand();
+            setAnimationDuration(animationDuration);
+        }
+    }
+
+    /**
+     * User interface state stored by {@link ExpandableTextView} for saving View state on
+     * {@code configChanges}.
+     *
+     * @see #onSaveInstanceState()
+     * @see #onRestoreInstanceState(Parcelable)
+     * */
+    public static class SavedState extends BaseSavedState {
+        boolean isExpanded;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            this.isExpanded = in.readInt() == 1;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(this.isExpanded ? 1 : 0);
+        }
+
+        //  required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+    }
 }
